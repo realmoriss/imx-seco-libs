@@ -130,13 +130,16 @@ struct seco_os_abs_hdl *seco_os_abs_open_mu_channel(uint32_t type, struct seco_m
         /* If open failed return NULL handle. */
         if (phdl->fd < 0) {
             if (type == MU_CHANNEL_SECO_HSM) {
+                printf("warning: cannot open primary path for type: %d\n", type);
                 device_path = SECO_MU_HSM_PATH_SECONDARY;
                 phdl->fd = open(device_path, O_RDWR);
                 if (phdl->fd < 0) {
+                printf("error: cannot open secondary path for type: %d\n", type);
                     free(phdl);
                     phdl = NULL;
                 }
             } else {
+                printf("error: cannot open primary path for type: %d\n", type);
                 free(phdl);
                 phdl = NULL;
             }
@@ -161,6 +164,7 @@ struct seco_os_abs_hdl *seco_os_abs_open_mu_channel(uint32_t type, struct seco_m
             if (is_nvm != 0u) {
                 /* for NVM: configure the device to accept incoming commands. */
                 if (ioctl(phdl->fd, SECO_MU_IOCTL_ENABLE_CMD_RCV)) {
+                    printf("error: cannot configure SECO_MU_IOCTL_ENABLE_CMD_RCV\n");
                     free(phdl);
                     phdl = NULL;
                 }
