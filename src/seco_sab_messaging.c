@@ -289,6 +289,7 @@ uint32_t sab_open_storage_command(struct seco_os_abs_hdl *phdl, uint32_t session
                     (uint32_t *)&cmd, (uint32_t)sizeof(struct sab_cmd_storage_open_msg),
                     (uint32_t *)&rsp, (uint32_t)sizeof(struct sab_cmd_storage_open_rsp));
         if (error != 0) {
+            printf("error in seco_send_msg_and_get_resp: %d\n", error);
             break;
         }
 
