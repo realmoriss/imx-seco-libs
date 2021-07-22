@@ -292,6 +292,13 @@ uint32_t sab_open_storage_command(struct seco_os_abs_hdl *phdl, uint32_t session
             printf("error in seco_send_msg_and_get_resp: %d\n", error);
             break;
         }
+        
+        printf("sab_open_storage_command rsp.rsp_code: %x\n", rsp.rsp_code);
+        printf("sab_open_storage_command rsp.storage_handle: %x\n", rsp.storage_handle);
+        printf("sab_open_storage_command rsp.hdr.command: %x\n", rsp.hdr.command);
+        printf("sab_open_storage_command rsp.hdr.size: %x\n", rsp.hdr.size);
+        printf("sab_open_storage_command rsp.hdr.tag: %x\n", rsp.hdr.tag);
+        printf("sab_open_storage_command rsp.hdr.ver: %x\n", rsp.hdr.ver);
 
         ret = rsp.rsp_code;
         *storage_handle = rsp.storage_handle;
