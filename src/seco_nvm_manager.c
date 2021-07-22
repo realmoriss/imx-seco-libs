@@ -145,7 +145,7 @@ static void seco_nvm_open_session(uint8_t flags)
                                        SAB_OPEN_SESSION_PRIORITY_LOW,
                                        ((flags & NVM_FLAGS_V2X) != 0u) ? SAB_OPEN_SESSION_LOW_LATENCY_MASK : 0U);
         if (err != SAB_SUCCESS_STATUS) {
-            printf("error in sab_open_session_command: %d\n", err);
+            printf("error in sab_open_session_command: %x\n", err);
             nvm_ctx.session_handle = 0u;
             break;
         }
@@ -158,7 +158,7 @@ static void seco_nvm_open_session(uint8_t flags)
                                         nvm_ctx.mu_type,
                                         flags);
         if (err != SAB_SUCCESS_STATUS) {
-            printf("error in sab_open_storage_command: %d\n", err);
+            printf("error in sab_open_storage_command: %x\n", err);
             nvm_ctx.storage_handle = 0u;
             break;
         }
