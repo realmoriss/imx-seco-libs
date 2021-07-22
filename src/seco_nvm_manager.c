@@ -144,8 +144,8 @@ static void seco_nvm_open_session(uint8_t flags)
                                        mu_params.did,
                                        SAB_OPEN_SESSION_PRIORITY_LOW,
                                        ((flags & NVM_FLAGS_V2X) != 0u) ? SAB_OPEN_SESSION_LOW_LATENCY_MASK : 0U);
-        if (err != SAB_SUCCESS_STATUS) {
-            printf("error in sab_open_session_command: %x\n", err);
+        if (GET_STATUS_CODE(err) != SAB_SUCCESS_STATUS) {
+            printf("error in sab_open_session_command: status %x rating %x\n", GET_STATUS_CODE(err), GET_RATING_CODE(err));
             nvm_ctx.session_handle = 0u;
             break;
         }
@@ -157,8 +157,8 @@ static void seco_nvm_open_session(uint8_t flags)
                                         &nvm_ctx.storage_handle,
                                         nvm_ctx.mu_type,
                                         flags);
-        if (err != SAB_SUCCESS_STATUS) {
-            printf("error in sab_open_storage_command: %x\n", err);
+        if (GET_STATUS_CODE(err) != SAB_SUCCESS_STATUS) {
+            printf("error in sab_open_storage_command: status %x rating %x\n", GET_STATUS_CODE(err), GET_RATING_CODE(err));
             nvm_ctx.storage_handle = 0u;
             break;
         }
@@ -166,7 +166,7 @@ static void seco_nvm_open_session(uint8_t flags)
     } while (false);
 
     /* Clean-up in case of error. */
-    if (err != SAB_SUCCESS_STATUS) { 
+    if (GET_STATUS_CODE(err) != SAB_SUCCESS_STATUS) { 
         seco_nvm_close_session();
         //clean nvm_ctx
     }
