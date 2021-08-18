@@ -25,6 +25,7 @@
 #include "she_api.h"
 #include "seco_os_abs.h"
 #include "seco_mu_ioctl.h"
+#include "seco_sab_msg_def.h"
 
 
 #define SHE_DEFAULT_DID             0x0u
@@ -203,12 +204,16 @@ void seco_os_abs_close_session(struct seco_os_abs_hdl *phdl)
 /* Send a message to Seco on the MU. Return the size of the data written. */
 int32_t seco_os_abs_send_mu_message(struct seco_os_abs_hdl *phdl, uint32_t *message, uint32_t size)
 {
+    struct sab_mu_hdr *msg = message;
+    printf("sending seco msg: ver %x size %x cmd %x tag %x\n", msg->ver, msg->size, msg->command, msg->tag);
     return (int32_t)write(phdl->fd, message, size);
 }
 
 /* Read a message from Seco on the MU. Return the size of the data that were read. */
 int32_t seco_os_abs_read_mu_message(struct seco_os_abs_hdl *phdl, uint32_t *message, uint32_t size)
 {
+    struct sab_mu_hdr *msg = message;
+    printf("reading seco msg: ver %x size %x cmd %x tag %x\n", msg->ver, msg->size, msg->command, msg->tag);
     return (int32_t)read(phdl->fd, message, size);
 };
 
