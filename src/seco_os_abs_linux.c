@@ -204,7 +204,7 @@ void seco_os_abs_close_session(struct seco_os_abs_hdl *phdl)
 /* Send a message to Seco on the MU. Return the size of the data written. */
 int32_t seco_os_abs_send_mu_message(struct seco_os_abs_hdl *phdl, uint32_t *message, uint32_t size)
 {
-    struct sab_mu_hdr *msg = message;
+    struct sab_mu_hdr *msg = (struct sab_mu_hdr *)message;
     printf("sending seco msg: ver %x size %x cmd %x tag %x\n", msg->ver, msg->size, msg->command, msg->tag);
     return (int32_t)write(phdl->fd, message, size);
 }
@@ -212,7 +212,7 @@ int32_t seco_os_abs_send_mu_message(struct seco_os_abs_hdl *phdl, uint32_t *mess
 /* Read a message from Seco on the MU. Return the size of the data that were read. */
 int32_t seco_os_abs_read_mu_message(struct seco_os_abs_hdl *phdl, uint32_t *message, uint32_t size)
 {
-    struct sab_mu_hdr *msg = message;
+    struct sab_mu_hdr *msg = (struct sab_mu_hdr *)message;
     printf("reading seco msg: ver %x size %x cmd %x tag %x\n", msg->ver, msg->size, msg->command, msg->tag);
     return (int32_t)read(phdl->fd, message, size);
 };
